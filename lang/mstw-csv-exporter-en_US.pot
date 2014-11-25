@@ -1,0 +1,364 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: MSTW CSV Exporter\n"
+"POT-Creation-Date: 2014-11-19 20:01-0800\n"
+"PO-Revision-Date: 2014-11-19 20:02-0800\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.6.1\n"
+"X-Poedit-Basepath: .\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-SearchPath-0: includes\n"
+"X-Poedit-SearchPath-1: templates\n"
+
+#: includes/mstw-csv-exporter-fcns.php:38
+#: includes/mstw-csv-exporter-setup.php:85
+#: includes/mstw-csv-exporter-setup.php:86
+msgid "Locations"
+msgstr ""
+
+#: includes/mstw-csv-exporter-fcns.php:39
+#: includes/mstw-csv-exporter-setup.php:80
+#: includes/mstw-csv-exporter-setup.php:92
+msgid "Games"
+msgstr ""
+
+#: includes/mstw-csv-exporter-fcns.php:40
+#: includes/mstw-csv-exporter-setup.php:94
+msgid "Teams"
+msgstr ""
+
+#: includes/mstw-csv-exporter-fcns.php:41
+#: includes/mstw-csv-exporter-setup.php:96
+msgid "Schedules"
+msgstr ""
+
+#: includes/mstw-csv-exporter-setup.php:55
+msgid "Data Table to Export"
+msgstr ""
+
+#: includes/mstw-csv-exporter-setup.php:65
+msgid ""
+"Select the data table to export, save it, then click Export. Export file "
+"will be named \"Table-Date_Time-export.csv\". For example, "
+"\"Games-20140214_043307-export.csv\"."
+msgstr ""
+
+#: includes/mstw-csv-exporter-setup.php:67
+msgid ""
+"Install and activate the MSTW Game Locations plugin before exporting "
+"locations (venues)."
+msgstr ""
+
+#: includes/mstw-csv-exporter-setup.php:70
+msgid ""
+"Install and activate the MSTW Game Schedules plugin before exporting "
+"schedules, teams, and games."
+msgstr ""
+
+#: includes/mstw-csv-exporter-setup.php:119
+msgid "CSV Export"
+msgstr ""
+
+#: includes/mstw-csv-exporter-setup.php:120
+msgid "MSTW CSV Export"
+msgstr ""
+
+#: includes/mstw-csv-exporter-setup.php:136
+msgid "You do not have sufficient permissions to access this page."
+msgstr ""
+
+#: includes/mstw-utility-functions.php:151
+msgid "Mon"
+msgstr ""
+
+#: includes/mstw-utility-functions.php:152
+msgid "Tue"
+msgstr ""
+
+#: includes/mstw-utility-functions.php:153
+msgid "Wed"
+msgstr ""
+
+#: includes/mstw-utility-functions.php:154
+msgid "Thr"
+msgstr ""
+
+#: includes/mstw-utility-functions.php:155
+msgid "Fri"
+msgstr ""
+
+#: includes/mstw-utility-functions.php:156
+msgid "Sat"
+msgstr ""
+
+#: includes/mstw-utility-functions.php:157
+msgid "Sun"
+msgstr ""
+
+#: includes/mstw-utility-functions.php:160
+msgid "Monday"
+msgstr ""
+
+#: includes/mstw-utility-functions.php:161
+msgid "Tuesday"
+msgstr ""
+
+#: includes/mstw-utility-functions.php:162
+msgid "Wednesday"
+msgstr ""
+
+#: includes/mstw-utility-functions.php:163
+msgid "Thursday"
+msgstr ""
+
+#: includes/mstw-utility-functions.php:164
+msgid "Friday"
+msgstr ""
+
+#: includes/mstw-utility-functions.php:165
+msgid "Saturday"
+msgstr ""
+
+#: includes/mstw-utility-functions.php:166
+msgid "Sunday"
+msgstr ""
+
+#: includes/mstw-utility-functions.php:169
+msgid "January"
+msgstr ""
+
+#: includes/mstw-utility-functions.php:170
+msgid "February"
+msgstr ""
+
+#: includes/mstw-utility-functions.php:171
+msgid "March"
+msgstr ""
+
+#: includes/mstw-utility-functions.php:172
+msgid "April"
+msgstr ""
+
+#: includes/mstw-utility-functions.php:173
+#: includes/mstw-utility-functions.php:187
+msgid "May"
+msgstr ""
+
+#: includes/mstw-utility-functions.php:174
+msgid "June"
+msgstr ""
+
+#: includes/mstw-utility-functions.php:175
+msgid "July"
+msgstr ""
+
+#: includes/mstw-utility-functions.php:176
+msgid "August"
+msgstr ""
+
+#: includes/mstw-utility-functions.php:177
+msgid "September"
+msgstr ""
+
+#: includes/mstw-utility-functions.php:178
+msgid "October"
+msgstr ""
+
+#: includes/mstw-utility-functions.php:179
+msgid "November"
+msgstr ""
+
+#: includes/mstw-utility-functions.php:180
+msgid "December"
+msgstr ""
+
+#: includes/mstw-utility-functions.php:183
+msgid "Jan"
+msgstr ""
+
+#: includes/mstw-utility-functions.php:184
+msgid "Feb"
+msgstr ""
+
+#: includes/mstw-utility-functions.php:185
+msgid "Mar"
+msgstr ""
+
+#: includes/mstw-utility-functions.php:186
+msgid "Apr"
+msgstr ""
+
+#: includes/mstw-utility-functions.php:188
+msgid "Jun"
+msgstr ""
+
+#: includes/mstw-utility-functions.php:189
+msgid "Jul"
+msgstr ""
+
+#: includes/mstw-utility-functions.php:190
+msgid "Aug"
+msgstr ""
+
+#: includes/mstw-utility-functions.php:191
+msgid "Sep"
+msgstr ""
+
+#: includes/mstw-utility-functions.php:192
+msgid "Oct"
+msgstr ""
+
+#: includes/mstw-utility-functions.php:193
+msgid "Nov"
+msgstr ""
+
+#: includes/mstw-utility-functions.php:194
+msgid "Dec"
+msgstr ""
+
+#: includes/mstw-utility-functions.php:320
+msgid "Default Field"
+msgstr ""
+
+#: includes/mstw-utility-functions.php:321
+msgid "Default Label"
+msgstr ""
+
+#: includes/mstw-utility-functions.php:546
+msgid "Show"
+msgstr ""
+
+#: includes/mstw-utility-functions.php:547
+msgid "Hide"
+msgstr ""
+
+#: includes/mstw-utility-functions.php:553
+msgid "Tuesday, 07 April 01:15 pm"
+msgstr ""
+
+#: includes/mstw-utility-functions.php:554
+msgid "Tuesday, 7 April 01:15 pm"
+msgstr ""
+
+#: includes/mstw-utility-functions.php:555
+msgid "Tuesday, 07 April 1:15 pm"
+msgstr ""
+
+#: includes/mstw-utility-functions.php:556
+msgid "Tuesday, 7 April 1:15 pm"
+msgstr ""
+
+#: includes/mstw-utility-functions.php:557
+#: includes/mstw-utility-functions.php:558
+msgid "Tuesday, 7 April 13:15"
+msgstr ""
+
+#: includes/mstw-utility-functions.php:559
+msgid "07 April 13:15"
+msgstr ""
+
+#: includes/mstw-utility-functions.php:560
+msgid "7 April 13:15"
+msgstr ""
+
+#: includes/mstw-utility-functions.php:561
+msgid "07 April 01:15 pm"
+msgstr ""
+
+#: includes/mstw-utility-functions.php:562
+msgid "7 April 01:15 pm"
+msgstr ""
+
+#: includes/mstw-utility-functions.php:565
+msgid "Formats for 7 April 2013 13:15."
+msgstr ""
+
+#: includes/mstw-utility-functions.php:575
+msgid "07 Apr 2013"
+msgstr ""
+
+#: includes/mstw-utility-functions.php:576
+msgid "7 Apr 2013"
+msgstr ""
+
+#: includes/mstw-utility-functions.php:577
+msgid "Tues, 07 Apr 2013"
+msgstr ""
+
+#: includes/mstw-utility-functions.php:578
+msgid "Tues, 7 Apr 13"
+msgstr ""
+
+#: includes/mstw-utility-functions.php:579
+msgid "Tuesday, 7 Apr"
+msgstr ""
+
+#: includes/mstw-utility-functions.php:580
+msgid "Tuesday, 07 April 2013"
+msgstr ""
+
+#: includes/mstw-utility-functions.php:581
+msgid "Tuesday, 7 April 2013"
+msgstr ""
+
+#: includes/mstw-utility-functions.php:582
+msgid "Tues, 07 Apr"
+msgstr ""
+
+#: includes/mstw-utility-functions.php:583
+msgid "Tues, 7 Apr"
+msgstr ""
+
+#: includes/mstw-utility-functions.php:584
+msgid "07 Apr"
+msgstr ""
+
+#: includes/mstw-utility-functions.php:585
+msgid "7 Apr"
+msgstr ""
+
+#: includes/mstw-utility-functions.php:588
+msgid "Formats for 7 Apr 2013. Default: 2013-04-07"
+msgstr ""
+
+#: includes/mstw-utility-functions.php:594
+msgid "08:00 (24hr)"
+msgstr ""
+
+#: includes/mstw-utility-functions.php:595
+msgid "8:00 (24hr)"
+msgstr ""
+
+#: includes/mstw-utility-functions.php:596
+msgid "08:00 am"
+msgstr ""
+
+#: includes/mstw-utility-functions.php:597
+msgid "08:00 AM"
+msgstr ""
+
+#: includes/mstw-utility-functions.php:598
+msgid "8:00 am"
+msgstr ""
+
+#: includes/mstw-utility-functions.php:599
+msgid "8:00 AM"
+msgstr ""
+
+#: includes/mstw-utility-functions.php:602
+msgid "Formats for eight in the morning. Default: 08:00"
+msgstr ""
+
+#: templates/mstw-csv-settings.php:2
+msgid "MSTW CSV Exporter Settings"
+msgstr ""
+
+#: templates/mstw-csv-settings.php:15
+msgid "Export Selected Table"
+msgstr ""
