@@ -46,5 +46,8 @@ This is the initial release.
 
 == Changelog ==
 
+= 1.1 =
+* Changed menu position (in includes/mstw-csv-exporter-setup/add_menu_page()) to prevent collision with other MSTW plugins.
+
 = 1.0 =
 * Initial release.

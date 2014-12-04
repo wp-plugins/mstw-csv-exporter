@@ -122,7 +122,7 @@ if(!class_exists('MSTW_CSVX_Settings')) {
         	    'mstw_csvx_template', 
         	    array(&$this, 'plugin_settings_page'),
 				'',
-				58 //priority ... just above the Appearance menu
+				"58.95" //priority ... just above the Appearance menu
         	);
         } // END public function add_menu()
     
