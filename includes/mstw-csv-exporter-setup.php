@@ -49,7 +49,7 @@ if(!class_exists('MSTW_CSVX_Settings')) {
         	    'mstw_csvx_template'
         	);
         	
-			if ( post_type_exists( 'game_locations' ) or post_type_exists( 'scheduled_games' ) ) {
+			if ( post_type_exists( 'game_locations' ) or post_type_exists( 'scheduled_games' ) or post_type_exists( 'mstw_ss_game' ) ) {
 				add_settings_field(
 					'mstw_csvx_post_type', 
 					__( 'Data Table to Export', 'mstw-csv-exporter' ), 
@@ -69,6 +69,9 @@ if(!class_exists('MSTW_CSVX_Settings')) {
 			if( !post_type_exists( 'scheduled_games' ) ) {
 				echo '<p class="csvx-msg">' . __( 'Install and activate the MSTW Game Schedules plugin before exporting schedules, teams, and games.', 'mstw-csv-exporter' ) . '</p>';
 			}
+			if( !post_type_exists( 'mstw_ss_game' ) ) {
+				echo '<p class="csvx-msg">' . __( 'Install and activate the MSTW Schedules & Scoreboards plugin before exporting schedules, teams, games, sports, and venues.', 'mstw-csv-exporter' ) . '</p>';
+			}
         }
         
         /**
@@ -77,23 +80,45 @@ if(!class_exists('MSTW_CSVX_Settings')) {
         public function settings_field_select_post_type( ) {
 		
 			//This is a patch
-			$options = __( 'Games', 'mstw-csv-exporter' );
+			$options = '';
 			
 			$i = 0;
 			$items = array();
+			//this is the original game locations, now deprecated
 			if( post_type_exists( 'game_locations' ) ) {
-				$options = __( 'Locations', 'mstw-csv-exporter' );
-				$items[$i] = __( 'Locations', 'mstw-csv-exporter' );
+				$options = __( 'Game Locations - Locations', 'mstw-csv-exporter' );
+				$items[$i] = __( 'Game Locations - Locations', 'mstw-csv-exporter' );
 				$i++;
 			}
 			
+			//this is the original game schedules, now deprecated
 			if ( post_type_exists( 'scheduled_games' ) ) {
+				if ( $options == '' ) {
+					$options = __( 'Game Schedules - Games', 'mstw-csv-exporter' );
+				}
 				// if we have games, then we have all three
-				$items[$i] = __( 'Games', 'mstw-csv-exporter' );
+				$items[$i] = __( 'Game Schedules - Games', 'mstw-csv-exporter' );
 				$i++;
-				$items[$i] = __( 'Teams', 'mstw-csv-exporter' );
+				$items[$i] = __( 'Game Schedules - Schedules', 'mstw-csv-exporter' );
 				$i++;
-				$items[$i] = __( 'Schedules', 'mstw-csv-exporter' );
+				$items[$i] = __( 'Game Schedules - Teams', 'mstw-csv-exporter' );
+				$i++;
+			}
+			
+			if ( post_type_exists( 'mstw_ss_game' ) ) {
+				if ( $options == '' ) {
+					$options = __( 'Schedules & Scoreboards - Games', 'mstw-csv-exporter' );
+				}
+				// if we have games, then we have all
+				$items[$i] = __( 'Schedules & Scoreboards - Games', 'mstw-csv-exporter' );
+				$i++;
+				$items[$i] = __( 'Schedules & Scoreboards - Schedules', 'mstw-csv-exporter' );
+				$i++;
+				$items[$i] = __( 'Schedules & Scoreboards - Sports', 'mstw-csv-exporter' );
+				$i++;
+				$items[$i] = __( 'Schedules & Scoreboards - Teams', 'mstw-csv-exporter' );
+				$i++;
+				$items[$i] = __( 'Schedules & Scoreboards - Venues', 'mstw-csv-exporter' );
 			}
 			
             // echo a proper input type="text"
@@ -117,11 +142,11 @@ if(!class_exists('MSTW_CSVX_Settings')) {
             // Add a page to manage this plugin's settings
         	add_menu_page(
         	    __( 'CSV Export', 'mstw-csv-exporter' ),
-        	    __( 'MSTW CSV Export', 'mstw-csv-exporter' ),
+        	    __( 'CSV Export', 'mstw-csv-exporter' ),
         	    'manage_options', 
         	    'mstw_csvx_template', 
         	    array(&$this, 'plugin_settings_page'),
-				'',
+				plugin_dir_url( __FILE__ ) . 'mstw-admin-menu-icon.png', //$menu_icon,
 				"58.95" //priority ... just above the Appearance menu
         	);
         } // END public function add_menu()

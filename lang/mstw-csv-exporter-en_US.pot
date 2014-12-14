@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: MSTW CSV Exporter\n"
-"POT-Creation-Date: 2014-11-19 20:01-0800\n"
-"PO-Revision-Date: 2014-11-19 20:02-0800\n"
+"POT-Creation-Date: 2014-12-14 13:26-0800\n"
+"PO-Revision-Date: 2014-12-14 13:26-0800\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en_US\n"
@@ -16,26 +16,52 @@ msgstr ""
 "X-Poedit-SearchPath-0: includes\n"
 "X-Poedit-SearchPath-1: templates\n"
 
+#: includes/mstw-csv-exporter-fcns.php:37
+#: includes/mstw-csv-exporter-setup.php:89
+#: includes/mstw-csv-exporter-setup.php:90
+msgid "Game Locations - Locations"
+msgstr ""
+
 #: includes/mstw-csv-exporter-fcns.php:38
-#: includes/mstw-csv-exporter-setup.php:85
-#: includes/mstw-csv-exporter-setup.php:86
-msgid "Locations"
+#: includes/mstw-csv-exporter-setup.php:97
+#: includes/mstw-csv-exporter-setup.php:100
+msgid "Game Schedules - Games"
 msgstr ""
 
 #: includes/mstw-csv-exporter-fcns.php:39
-#: includes/mstw-csv-exporter-setup.php:80
-#: includes/mstw-csv-exporter-setup.php:92
-msgid "Games"
+#: includes/mstw-csv-exporter-setup.php:104
+msgid "Game Schedules - Teams"
 msgstr ""
 
 #: includes/mstw-csv-exporter-fcns.php:40
-#: includes/mstw-csv-exporter-setup.php:94
-msgid "Teams"
+#: includes/mstw-csv-exporter-setup.php:102
+msgid "Game Schedules - Schedules"
 msgstr ""
 
 #: includes/mstw-csv-exporter-fcns.php:41
-#: includes/mstw-csv-exporter-setup.php:96
-msgid "Schedules"
+#: includes/mstw-csv-exporter-setup.php:110
+#: includes/mstw-csv-exporter-setup.php:113
+msgid "Schedules & Scoreboards - Games"
+msgstr ""
+
+#: includes/mstw-csv-exporter-fcns.php:42
+#: includes/mstw-csv-exporter-setup.php:115
+msgid "Schedules & Scoreboards - Schedules"
+msgstr ""
+
+#: includes/mstw-csv-exporter-fcns.php:43
+#: includes/mstw-csv-exporter-setup.php:117
+msgid "Schedules & Scoreboards - Sports"
+msgstr ""
+
+#: includes/mstw-csv-exporter-fcns.php:44
+#: includes/mstw-csv-exporter-setup.php:119
+msgid "Schedules & Scoreboards - Teams"
+msgstr ""
+
+#: includes/mstw-csv-exporter-fcns.php:45
+#: includes/mstw-csv-exporter-setup.php:121
+msgid "Schedules & Scoreboards - Venues"
 msgstr ""
 
 #: includes/mstw-csv-exporter-setup.php:55
@@ -61,15 +87,18 @@ msgid ""
 "schedules, teams, and games."
 msgstr ""
 
-#: includes/mstw-csv-exporter-setup.php:119
+#: includes/mstw-csv-exporter-setup.php:73
+msgid ""
+"Install and activate the MSTW Schedules & Scoreboards plugin before "
+"exporting schedules, teams, games, sports, and venues."
+msgstr ""
+
+#: includes/mstw-csv-exporter-setup.php:144
+#: includes/mstw-csv-exporter-setup.php:145
 msgid "CSV Export"
 msgstr ""
 
-#: includes/mstw-csv-exporter-setup.php:120
-msgid "MSTW CSV Export"
-msgstr ""
-
-#: includes/mstw-csv-exporter-setup.php:136
+#: includes/mstw-csv-exporter-setup.php:161
 msgid "You do not have sufficient permissions to access this page."
 msgstr ""
 
@@ -236,6 +265,12 @@ msgstr ""
 
 #: includes/mstw-utility-functions.php:547
 msgid "Hide"
+msgstr ""
+
+#: includes/mstw-utility-functions.php:552
+#: includes/mstw-utility-functions.php:570
+#: includes/mstw-utility-functions.php:593
+msgid "Custom"
 msgstr ""
 
 #: includes/mstw-utility-functions.php:553

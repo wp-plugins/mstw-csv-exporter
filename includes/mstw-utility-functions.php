@@ -549,7 +549,7 @@ if( !function_exists( 'mstw_build_settings_field' ) ) {
 				break;
 			case 'date-time':
 				$type = 'select-option';
-				$options = array ( 	//__( 'Custom', 'mstw-loc-domain' ) => 'custom',
+				$options = array ( 	__( 'Custom', 'mstw-loc-domain' ) => 'custom',
 									__( 'Tuesday, 07 April 01:15 pm', 'mstw-loc-domain' ) => 'l, d M h:i a',
 									__( 'Tuesday, 7 April 01:15 pm', 'mstw-loc-domain' ) => 'l, j M h:i a',
 									__( 'Tuesday, 07 April 1:15 pm', 'mstw-loc-domain' ) => 'l, d M g:i a',
@@ -567,7 +567,7 @@ if( !function_exists( 'mstw_build_settings_field' ) ) {
 				break;
 			case 'date-only':
 				$type = 'select-option';
-				$options = array ( 	//__( 'Custom', 'mstw-loc-domain' ) => 'custom',
+				$options = array ( 	__( 'Custom', 'mstw-loc-domain' ) => 'custom',
 									'2013-04-07' => 'Y-m-d',
 									'13-04-07' => 'y-m-d',
 									'04/07/13' => 'm/d/y',
@@ -590,7 +590,7 @@ if( !function_exists( 'mstw_build_settings_field' ) ) {
 				break;
 			case 'time-only':
 				$type = 'select-option';
-				$options = array ( 	//__( 'Custom', 'mstw-loc-domain' ) 	=> 'custom',
+				$options = array ( 	__( 'Custom', 'mstw-loc-domain' ) 	=> 'custom',
 									__( '08:00 (24hr)', 'mstw-loc-domain' ) => 'H:i',
 									__( '8:00 (24hr)', 'mstw-loc-domain' ) 	=> 'G:i',
 									__( '08:00 am', 'mstw-loc-domain' ) 	=> 'h:i a',

@@ -4,19 +4,19 @@ Donate link: http://shoalsummitsolutions.com
 Tags: CSV, CSV Export, MSTW, MSTW Plugins, Game Locations, Game Schedules, Game Schedules & Scoreboards 
 Requires at least: 3.3.1
 Tested up to: 4.0
-Stable tag: 1.0
+Stable tag: 1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Exports CPTs in the MSTW Game Schedules and Game Locations plugins to CSV format files.
+Exports various MSTW custom post types to CSV format files.
 
 == Description ==
 
-The MSTW CSV Exporter plugin exports custom post types from the MSTW Game Schedules and MSTW Game Locations plugins to CSV format files for import into the MSTW Schedules & Scoreboards plugin. 
+The MSTW CSV Exporter plugin exports custom post types from the MSTW Game Schedules, MSTW Game Locations, and MSTW Schedules & Scoreboards plugins to CSV format files for import into the MSTW Schedules & Scoreboards plugin. This allows the migration of plugin data across sites.
 
-Its primary purpose to to support data migration when upgrading from the MSTW Game Locations and MSTW Game Schedules plugins to the new MSTW Schedules & Scoreboards plugin. The old plugins have been integrated into the new plugin which changed the data structures (in the custom post types) to support more robust data migration across sites running the Schedules & Scoreboards plugin.
+Version 1.0 supported migration of the MSTW Game Locations and MSTW Game Schedules plugins to the new MSTW Schedules & Scoreboards plugin. The old plugins have been integrated into the new plugin, which changed the data structures (in the custom post types) to support more robust data migration across sites running the Schedules & Scoreboards plugin.
 
-VERSION 1.0 IS OF VALUE ONLY FOR MIGRATING SITES USING MSTW GAME LOCATIONS AND GAME SCHEDULES TO THE NEW MSTW SCHEDULES & SCOREBOARDS PLUGIN.
+Version 1.1 added the ability to export the new MSTW Schedules & Scoreboards plugin data tables - Games, Teams, Schedules, Sports, and Venues - AND the associated Venue Group and Scoreboard taxonomies, for import to another site.
 
 = Helpful Links =
 * [**When all else fails try reading the user's manual at shoalsummitsolutions.com -»**](http://shoalsummitsolutions.com/category/csvx-plugin)
@@ -41,13 +41,14 @@ The normal installation methods for WordPress plugins work:
 1. Plugin admin screen
 
 == Upgrade Notice ==
-
-This is the initial release.
+Nothing to note.
 
 == Changelog ==
 
 = 1.1 =
+* Added the ability to export MSTW Schedules & Scoreboards CPT's - schedules, games, teams, sports, and venues - including the venue groups for the venues and scoreboards for the games.
 * Changed menu position (in includes/mstw-csv-exporter-setup/add_menu_page()) to prevent collision with other MSTW plugins.
+* Added MSTW Logo to admin menu entry
 
 = 1.0 =
 * Initial release.
