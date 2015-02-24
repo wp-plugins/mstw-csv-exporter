@@ -45,6 +45,9 @@ Nothing to note.
 
 == Changelog ==
 
+= 1.2 =
+* Added the ability to export the Team Rosters CPT (players) and taxonomy (teams)
+
 = 1.1 =
 * Added the ability to export MSTW Schedules & Scoreboards CPT's - schedules, games, teams, sports, and venues - including the venue groups for the venues and scoreboards for the games.
 * Changed menu position (in includes/mstw-csv-exporter-setup/add_menu_page()) to prevent collision with other MSTW plugins.
