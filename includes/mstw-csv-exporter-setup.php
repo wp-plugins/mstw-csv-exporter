@@ -5,7 +5,7 @@
  *	helper functions. 
  *
  *	MSTW Wordpress Plugins (http://shoalsummitsolutions.com)
- *	Copyright 2014 Mark O'Donnell (mark@shoalsummitsolutions.com)
+ *	Copyright 2014-15 Mark O'Donnell (mark@shoalsummitsolutions.com)
  *
  *	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -72,6 +72,9 @@ if(!class_exists('MSTW_CSVX_Settings')) {
 			if( !post_type_exists( 'mstw_ss_game' ) ) {
 				echo '<p class="csvx-msg">' . __( 'Install and activate the MSTW Schedules & Scoreboards plugin before exporting schedules, teams, games, sports, and venues.', 'mstw-csv-exporter' ) . '</p>';
 			}
+			if( !post_type_exists( 'player' ) ) {
+				echo '<p class="csvx-msg">' . __( 'Install and activate the MSTW Team Rosters plugin (pre-version 4.0) before exporting players & teams.', 'mstw-csv-exporter' ) . '</p>';
+			}
         }
         
         /**
@@ -102,6 +105,13 @@ if(!class_exists('MSTW_CSVX_Settings')) {
 				$items[$i] = __( 'Game Schedules - Schedules', 'mstw-csv-exporter' );
 				$i++;
 				$items[$i] = __( 'Game Schedules - Teams', 'mstw-csv-exporter' );
+				$i++;
+			}
+			
+			//this is the original team rosters, now deprecated
+			if ( post_type_exists( 'player' ) ) {
+				$options = __( 'Team Rosters (pre-4.0) - Players', 'mstw-csv-exporter' );
+				$items[$i] = __( 'Team Rosters (pre-4.0) - Players', 'mstw-csv-exporter' );
 				$i++;
 			}
 			

@@ -38,6 +38,7 @@ function mstw_csvx_generate( $input_post_type ) {
 					   __( 'Game Schedules - Games', 'mstw-csv-exporter' ) 	=> 'scheduled_games',
 					   __( 'Game Schedules - Teams', 'mstw-csv-exporter' )		=> 'mstw_gs_teams',
 					   __( 'Game Schedules - Schedules', 'mstw-csv-exporter' )	=> 'mstw_gs_schedules',
+					   __( 'Team Rosters (pre-4.0) - Players', 'mstw-csv-exporter' )	=> 'player', //new
 					   __( 'Schedules & Scoreboards - Games', 'mstw-csv-exporter' ) => 'mstw_ss_game',
 					   __( 'Schedules & Scoreboards - Schedules', 'mstw-csv-exporter' ) => 'mstw_ss_schedule',
 					   __( 'Schedules & Scoreboards - Sports', 'mstw-csv-exporter' ) => 'mstw_ss_sport',
@@ -88,6 +89,10 @@ function mstw_csvx_generate( $input_post_type ) {
 			}
 			else if ( $mstw_csvx_generate_post_type == 'mstw_ss_game' ) {
 				$mstw_csvx_generate_post_values['game_scoreboard'] = array( 'game_scoreboard' );
+			}
+			if ( $mstw_csvx_generate_post_type == 'player' ) {
+				$mstw_csvx_generate_post_values['teams'] = array( 'teams' );
+				$mstw_csvx_generate_post_values['player_bio'] = array( 'player_bio' );
 			}
 			
 			foreach ( $mstw_csvx_generate_custom_fields['selectinput'] as $key=>$value ) {
@@ -223,9 +228,6 @@ function mstw_csvx_set_value( $mstw_csvx_generate_post_values, $key, $post_type 
 			}
 			break;
 		case 'mstw_ss_venue':
-			//mstw_log_msg( 'in mstw_csvx_set_value ... case mstw_ss_venue ' );
-			//mstw_log_msg( '$key= ' . $key );
-			//mstw_log_msg( $mstw_csvx_generate_post_values );
 			if ( $key == 'venue_group' ) {
 				$ret_val = '';
 				if ( isset( $mstw_csvx_generate_post_values['post_slug'] ) ) {
@@ -260,7 +262,7 @@ function mstw_csvx_set_value( $mstw_csvx_generate_post_values, $key, $post_type 
 					if( $game_obj !== null ) {
 						//mstw_log_msg( $venue_obj );
 						$game_id = $game_obj->ID;
-						mstw_log_msg( 'in mstw_csvx_set_value $game_id= ' . $game_id );
+						//mstw_log_msg( 'in mstw_csvx_set_value $game_id= ' . $game_id );
 						$scoreboards = get_the_terms( $game_id, 'mstw_ss_scoreboard' );
 						
 						if ( $scoreboards ) {
@@ -268,10 +270,49 @@ function mstw_csvx_set_value( $mstw_csvx_generate_post_values, $key, $post_type 
 								$ret_val .= $scoreboard->slug . ';';
 							}
 						}
-						mstw_log_msg( '$ret_val= ' . $ret_val );
+						//mstw_log_msg( '$ret_val= ' . $ret_val );
 					} //End: if( $game_obj !== null ) {
 				} //End: if ( isset( $mstw_csvx_generate_post_values['post_slug'] ) ) {
 			} //End: if ( $key == 'game_scoreboard' ) {
+			break;
+		case 'player':
+			//mstw_log_msg( 'in mstw_csvx_set_value post_type = player, $key= ' . $key );
+			//if ( $key == 'player_bio' ) die( 'found it' );
+			if ( $key == 'teams' ) {
+				//mstw_log_msg( 'in mstw_csvx_set_value key = teams' );
+				$ret_val = '';
+				if ( isset( $mstw_csvx_generate_post_values['post_slug'] ) ) {
+					$slug = $mstw_csvx_generate_post_values['post_slug'][0];
+					//mstw_log_msg( 'in mstw_csvx_set_value $slug= ' . $slug );
+					
+					$player_obj = get_page_by_path( $slug, OBJECT, 'player' );
+					if( $player_obj !== null ) {
+						//mstw_log_msg( $venue_obj );
+						$player_id = $player_obj->ID;
+						//mstw_log_msg( 'in mstw_csvx_set_value $player_id= ' . $player_id );
+						$teams = get_the_terms( $player_id, 'teams' );
+						
+						if ( $teams ) {
+							foreach( $teams as $team ) {
+								$ret_val .= $team->slug . ';';
+							}
+						}
+						//mstw_log_msg( '$ret_val= ' . $ret_val );
+					} //End: if( $game_obj !== null ) {
+				} //End: if ( isset( $mstw_csvx_generate_post_values['post_slug'] ) ) {
+			} //End: if ( $key == 'teams' ) {
+			else if ( $key == 'player_bio' ) {
+				//mstw_log_msg( 'in $key == \'player_bio\' ... ' );
+				$ret_val = '';
+				if ( isset( $mstw_csvx_generate_post_values['post_slug'] ) ) {
+					$slug = $mstw_csvx_generate_post_values['post_slug'][0];
+					$player_obj = get_page_by_path( $slug, OBJECT, 'player' );
+					if( $player_obj !== null ) {
+						$ret_val = $player_obj->post_content;
+					}
+				}
+				//mstw_log_msg( '$ret_val = ' . $ret_val );
+			}
 			break;
 		case 'game_locations':
 		default:
@@ -461,6 +502,33 @@ function mstw_csvx_get_fields_map( ) {
 								'venue_map_url' => 'venue_map_url',
 								'venue_url' 	=> 'venue_url',
 								'venue_group'	=> 'venue_group',
+								),
+						),
+				'player' => 
+					array( 'selectinput' => 
+						array(	'post_title'	=> 'player_title',
+								'post_slug'		=> 'player_slug',
+								
+								'_mstw_tr_first_name'	=> 'player_first_name',
+								'_mstw_tr_last_name' 	=> 'player_last_name',
+								'_mstw_tr_number' 		=> 'player_number',
+								'_mstw_tr_height' 		=> 'player_height',
+								'_mstw_tr_weight' 		=> 'player_weight',
+								'_mstw_tr_position' 	=> 'player_position',
+								'_mstw_tr_year'			=> 'player_year',
+								'_mstw_tr_experience'	=> 'player_experience',
+								'_mstw_tr_age'			=> 'player_age',
+								'_mstw_tr_home_town'	=> 'player_home_town',
+								'_mstw_tr_last_school'	=> 'player_last_school',
+								'_mstw_tr_country'		=> 'player_country',
+								'_mstw_tr_bats'			=> 'player_bats',
+								'_mstw_tr_throws'		=> 'player_throws',
+								'_mstw_tr_other'		=> 'player_other',
+								// player bio is post content
+								'player_bio'			=> 'player_bio',
+								// teams taxonomy
+								'teams'	 				=> 'player_teams',
+								
 								),
 						),
 					

@@ -41,8 +41,10 @@
  * 13. mstw_get_current_post_type - get the current post type in the WordPress Admin
  * 14. mstw_get_the_slug - get the post slug from the post id
  * 15. mstw_has_admin_rights - checks is the CURRENT USER has mstw admin rights
- * 16. mstw_has_ss_rights - check if the CURRENT USER has Schedules & 
- * 							Scoreboards admin rights
+ * 16. mstw_user_has_plugin_rights - check if the CURRENT USER has admin rights for
+ *									 specified plugin
+ * 17. mstw_admin_notice - Displays all admin notices; callback for admin_notices action
+ * 18. mstw_add_admin_notice - Adds admin notices to transient for display on admin_notices hook
  *----------------------------------------------------------------------------*/
  
 //------------------------------------------------------------------------------
@@ -85,9 +87,6 @@ if ( !function_exists( 'mstw_requires_wordpress_version' ) ) {
 		//$plugin_data = get_plugin_data( __FILE__, false );
 		$plugin_data = get_plugin_data( MSTW_SS_PLUGIN_DIR . '/mstw-schedules-scoreboards.php', 
 										false );
-										
-		//mstw_log_msg( '$plugin: ' . $plugin );
-		//mstw_log_msg( '$plugin name: ' . $plugin_data['Name'] );
 
 		if ( version_compare( $wp_version, $version, "<" ) ) {
 			if( is_plugin_active( $plugin ) ) {
@@ -116,17 +115,18 @@ if( !function_exists( 'mstw_safe_ref' ) ) {
 //------------------------------------------------------------------------------
 //	4. mstw_build_css_rule - builds css rules
 //		Arguments:
-//			$options - array of options
+//			$options: array of options (settings DB)
 //			$option_key: key for options in array 
 //			$css_base: base for css rule (e.g. 'background-color' )
+//			$suffix: string to add on end of rule (E.G. 'px' at the end of width)
 //		Returns:
 //			css rule "css_base:options[option_key]; \n"
 //				or "" on an error	
 //
 if ( !function_exists( 'mstw_build_css_rule' ) ) {		
-	function mstw_build_css_rule( $options, $option_key, $css_base ) {
+	function mstw_build_css_rule( $options, $option_key, $css_base, $suffix='' ) {
 		if ( isset( $options[$option_key] ) and !empty( $options[$option_key] ) ) {
-			return $css_base . ":" . $options[$option_key] . "; \n";	
+			return $css_base . ":" . $options[$option_key] . $suffix . "; \n";	
 		} 
 		else {
 			return "";
@@ -370,6 +370,11 @@ if( !function_exists( 'mstw_build_admin_edit_field' ) ) {
 				//but without it you get an extra option with the 
 				//'option-name' displayed (huh??)
 				$options = $args['options'];
+				
+				//mstw_log_msg( 'in mstw_build_admin_edit_field $options = ' );
+				//mstw_log_msg( $options );
+				//mstw_log_msg( '$current_value= ' . $curr_value );
+				//mstw_log_msg( '$value= ' . $value );
 					
 				echo "<select id='$id' name='$name' $attrib_str >";
 					foreach( $options as $key=>$value ) {
@@ -393,9 +398,6 @@ if( !function_exists( 'mstw_build_admin_edit_field' ) ) {
 				
 			// MEDIA UPLOADER
 			case 'media-uploader':
-				//echo 'Upload Media';
-				//mstw_log_msg( '$btn_label: ' . $btn_label );
-				
 				?>
 				<td class="uploader">
 					<input type="text" name="<?php echo $id  ?>" id="<?php echo $id ?>" class="mstw_logo_text" size="30" value="<?php echo $curr_value ?>"/>
@@ -539,6 +541,9 @@ if( !function_exists( 'mstw_build_settings_field' ) ) {
 		// "extract" to be able to use the array keys as variables in our function output below
 		extract( wp_parse_args( $args, $defaults ) );
 		
+		//mstw_log_msg( 'in build_settings_field ... $args= ' );
+		//mstw_log_msg( wp_parse_args( $args, $defaults ) );
+		
 		//Handle some MSTW custom field types; convert for generic select-option
 		switch ( $type ) {
 			case 'show-hide':
@@ -549,6 +554,7 @@ if( !function_exists( 'mstw_build_settings_field' ) ) {
 				break;
 			case 'date-time':
 				$type = 'select-option';
+				
 				$options = array ( 	__( 'Custom', 'mstw-loc-domain' ) => 'custom',
 									__( 'Tuesday, 07 April 01:15 pm', 'mstw-loc-domain' ) => 'l, d M h:i a',
 									__( 'Tuesday, 7 April 01:15 pm', 'mstw-loc-domain' ) => 'l, j M h:i a',
@@ -561,9 +567,16 @@ if( !function_exists( 'mstw_build_settings_field' ) ) {
 									__( '07 April 01:15 pm', 'mstw-loc-domain' ) => 'd M g:i a',
 									__( '7 April 01:15 pm', 'mstw-loc-domain' ) => 'j M g:i a',		
 									);
+				
+				if ( isset( $custom_format ) && $custom_format == 0 ) {
+					//remove the custom option
+					unset( $options[ __( 'Custom', 'mstw_loc_domain' ) ] );
+				}
+				
 				if ( $desc == '' ) {
 					$desc = __( 'Formats for 7 April 2013 13:15.', 'mstw-loc-domain' );
 				}
+				
 				break;
 			case 'date-only':
 				$type = 'select-option';
@@ -584,6 +597,11 @@ if( !function_exists( 'mstw_build_settings_field' ) ) {
 									__( '07 Apr', 'mstw-loc-domain' ) => 'd M',
 									__( '7 Apr', 'mstw-loc-domain' ) => 'j M',
 									);
+									
+				if ( isset( $custom_format ) && $custom_format == 0 ) {
+					//remove the custom option
+					unset( $options[ __( 'Custom', 'mstw_loc_domain' ) ] );
+				}
 				if ( $desc == '' ) {
 					$desc = __( 'Formats for 7 Apr 2013. Default: 2013-04-07', 'mstw-loc-domain' );
 				}
@@ -598,6 +616,11 @@ if( !function_exists( 'mstw_build_settings_field' ) ) {
 									__( '8:00 am', 'mstw-loc-domain' ) 		=> 'g:i a',
 									__( '8:00 AM', 'mstw-loc-domain' ) 		=> 'g:i A',
 									);
+									
+				if ( isset( $custom_format ) && $custom_format == 0 ) {
+					//remove the custom option
+					unset( $options[ __( 'Custom', 'mstw_loc_domain' ) ] );
+				}
 				if ( $desc == '' ) {
 					$desc = __( 'Formats for eight in the morning. Default: 08:00', 'mstw-loc-domain' );
 				}
@@ -693,7 +716,8 @@ if( !function_exists( 'mstw_validate_url' ) ) {
 		else { 
 			// url is not valid, display an error message (dont' update DB)
 			$notice .= ' ' . $url;			
-			mstw_ss_add_admin_notice( $notice_type, $notice );
+			if ( function_exists( 'mstw_add_admin_notice' ) ) 
+				mstw_add_admin_notice( $notice_type, $notice );
 		}
 	} //End: mstw_validate_url()
 }
@@ -767,22 +791,112 @@ if ( !function_exists( 'mstw_has_admin_rights' ) ) {
 	} //End: mstw_has_admin_rights( )
 }
 
+
 //-------------------------------------------------------------------------------
-// 16. mstw_user_has_ss_rights - check if the CURRENT USER has 
+// 16. mstw_has_plugin_rights - check if the CURRENT USER has 
+//							Schedules & Scoreboards admin rights
+//		ARGUMENTS: 	$plugin - plugin abbreviation - 'tr', 'ss', 'cs', 'ls', //							  'csvx', etc.
+//		RETURNS: 	true if the current user has rights
+//				 	false otherwise	
+//
+if ( !function_exists( 'mstw_user_has_plugin_rights' ) ) { 	
+	function mstw_user_has_plugin_rights( $plugin = 'ss' ) {
+		
+		if ( current_user_can( 'edit_others_posts' ) or  //WP admins and editors
+			 current_user_can( 'view_mstw_menus' ) or    //MSTW admins
+			 current_user_can( 'view_mstw_' . $plugin . '_menus' )    //plugin admins
+			 ) {
+			return true;
+		}
+		return false;
+		
+	} //End: mstw_user_has_plugin_rights( )
+}
+
+//-------------------------------------------------------------------------------
+// 16.1 mstw_has_ss_rights - check if the CURRENT USER has 
 //							Schedules & Scoreboards admin rights
 //		ARGUMENTS: 	none
 //		RETURNS: 	true if the current user has rights
 //				 	false otherwise	
 //
+// THIS IS HERE FOR COMPATIBILITY PURPOSES ONLY. 
+// IT CALLS mstw_user_has_plugin_rights()
+//
 if ( !function_exists( 'mstw_user_has_ss_rights' ) ) { 	
 	function mstw_user_has_ss_rights( ) {
-		if ( current_user_can( 'edit_others_posts' ) or  //WP admins and editors
-			 current_user_can( 'view_mstw_menus' ) or    //MSTW admins
-			 current_user_can( 'view_mstw_ss_menus' )    /*MSTW SS admins*/ ) {
-			return true;
-		}
-		return false;
-		
+		return mstw_user_has_plugin_rights( 'ss' );
 	} //End: mstw_user_has_ss_rights( )
 }
+
+
+//----------------------------------------------------------------
+// 17. mstw_admin_notice - Displays all admin notices; callback for admin_notices action
+//		ARGUMENTS: 	$transient - transient where messages are stored
+//		RETURNS:	None. Displays all messages in the $transient transient
+//					(then deletes it)
+//
+if ( !function_exists ( 'mstw_admin_notice' ) ) {
+	function mstw_admin_notice( $transient = 'mstw_admin_messages' ) {
+		//mstw_log_msg( 'in mstw_ss_admin_notice ... ' );
+		if ( get_transient( $transient ) !== false ) {
+			// get the types and messages
+			$messages = get_transient( $transient );
+			// display the messages
+			foreach ( $messages as $message ) {
+				$msg_type = $message['type'];
+				$msg_notice = $message['notice'];
+				
+				// Kludge to get warning messages to appear after page title
+				$msg_type = ( $msg_type == 'warning' ) ? $msg_type . ' updated' : $msg_type ;
+			?>
+				<div class="<?php echo $msg_type; ?>">
+					<p><?php echo $msg_notice; ?></p>
+				</div>
+			
+			<?php
+			}
+			//mstw_log_msg( 'deleting transient ... ' );
+			delete_transient( $transient );
+			
+		} //End: if ( get_transient( $transient ) )
+	} //End: function mstw_admin_notice( )
+}
+
+//----------------------------------------------------------------
+// 18. mstw_add_admin_notice - Adds admin notices to transient for display on admin_notices hook
+//
+//	ARGUMENTS: 	$transient - transient to store message
+//				$type - type of notice [updated|error|update-nag|warning]
+//				$notice - notice text
+//
+//	RETURNS:	None. Stores notice and type in transient for later display on admin_notices hook
+//
+if ( !function_exists ( 'mstw_add_admin_notice' ) ) {
+	function mstw_add_admin_notice( $transient = 'mstw_admin_messages', $type = 'updated', $notice ) {
+		//default type to 'updated'
+		if ( !( $type == 'updated' or $type == 'error' or $type =='update-nag' or $type == 'warning' ) ) $type = 'updated';
+		
+		//set the admin message
+		$new_msg = array( array(
+							'type'	=> $type,
+							'notice'	=> $notice
+							)
+						);
+
+		//either create or add to the sss_admin transient
+		$existing_msgs = get_transient( $transient );
+		
+		if ( $existing_msgs === false ) {
+			// no transient exists, create it with the current message
+			set_transient( $transient, $new_msg, HOUR_IN_SECONDS );
+		} 
+		else {
+			// transient exists, append current message to it
+			$new_msgs = array_merge( $existing_msgs, $new_msg );
+			set_transient ( $transient, $new_msgs, HOUR_IN_SECONDS );
+		}
+	} //End: function mstw_add_admin_notice( )
+}
+
 ?>

@@ -11,7 +11,7 @@ Text Domain: mstw-csv-exporter
 
 /*------------------------------------------------------------------------------
  *	MSTW Wordpress Plugins (http://shoalsummitsolutions.com)
- *	Copyright 2014 Mark O'Donnell (mark@shoalsummitsolutions.com)
+ *	Copyright 2014-15 Mark O'Donnell (mark@shoalsummitsolutions.com)
  *
  *	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -49,8 +49,6 @@ add_action( 'plugins_loaded', 'mstw_csvx_load_localization' );
 	
 function mstw_csvx_load_localization( ) {
 	load_plugin_textdomain( 'mstw-csv-exporter', false, dirname( plugin_basename( __FILE__ ) ) . '/lang' );
-	//mstw_log_msg( 'in mstw_csvx_load_localization locale: ' . get_locale( ) );
-	//mstw_log_msg( 'directory: ' . dirname( plugin_basename( __FILE__ ) ) . '/lang' );
 }
 
 function debug_load_textdomain( $domain, $mofile ) {
@@ -140,7 +138,7 @@ function mstw_csvx_admin_enqueue_scripts( $hook_suffix ) {
 			
 			$plugin = plugin_basename( __FILE__ ); 
 			add_filter("plugin_action_links_$plugin", 'plugin_settings_link');
-			mstw_log_msg( 'CSVX: set plugin_action_links_' . $plugin );
+			//mstw_log_msg( 'CSVX: set plugin_action_links_' . $plugin );
 		}
 	} //End: if( class_exists( 'MSTW_CSVX' ) )
 //} //End: mstw_gl_init_export()
