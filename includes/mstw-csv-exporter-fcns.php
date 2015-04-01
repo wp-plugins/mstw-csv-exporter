@@ -5,7 +5,7 @@
  *	build the CSV file. 
  *
  *	MSTW Wordpress Plugins (http://shoalsummitsolutions.com)
- *	Copyright 2014 Mark O'Donnell (mark@shoalsummitsolutions.com)
+ *	Copyright 2014-15 Mark O'Donnell (mark@shoalsummitsolutions.com)
  *
  *	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -35,10 +35,14 @@ function mstw_csvx_generate( $input_post_type ) {
 	// This is setting up a separate plugin for CSV Export
 	
 	$type_map = array( __( 'Game Locations - Locations', 'mstw-csv-exporter' )	=> 'game_locations',
+	
 					   __( 'Game Schedules - Games', 'mstw-csv-exporter' ) 	=> 'scheduled_games',
 					   __( 'Game Schedules - Teams', 'mstw-csv-exporter' )		=> 'mstw_gs_teams',
 					   __( 'Game Schedules - Schedules', 'mstw-csv-exporter' )	=> 'mstw_gs_schedules',
-					   __( 'Team Rosters (pre-4.0) - Players', 'mstw-csv-exporter' )	=> 'player', //new
+					   
+					   __( 'Team Rosters (3.1.2 & before) - Players', 'mstw-csv-exporter' )	=> 'player', 
+					   __( 'Team Rosters (3.1.2 & before) - Teams', 'mstw-csv-exporter' )	=> 'teams',
+					   
 					   __( 'Schedules & Scoreboards - Games', 'mstw-csv-exporter' ) => 'mstw_ss_game',
 					   __( 'Schedules & Scoreboards - Schedules', 'mstw-csv-exporter' ) => 'mstw_ss_schedule',
 					   __( 'Schedules & Scoreboards - Sports', 'mstw-csv-exporter' ) => 'mstw_ss_sport',
@@ -47,54 +51,91 @@ function mstw_csvx_generate( $input_post_type ) {
 					  );
 	
 	
-	// Get the custom post type that is being exported
+	// Get the CPT or CT that is being exported
 	//mstw_log_msg( '$input_post_type = ' . $input_post_type );
 	$mstw_csvx_generate_post_type = $type_map[$input_post_type];
+	
+	mstw_log_msg( 'input post_type = ' . $input_post_type );
+	mstw_log_msg( 'new post type = ' . $mstw_csvx_generate_post_type );
 
-	// Get the custom fields (for CPT) is being exported
+	// Get the custom fields (for CPT or CT) being exported
 	//$mstw_csvx_generate_custom_fields = get_option('mstw_csvx_custom_fields');
 	$fields_map = mstw_csvx_get_fields_map( );
 		
 	$mstw_csvx_generate_custom_fields = $fields_map[$mstw_csvx_generate_post_type];
 	
-	// Query the DB for all instances of the custom post type
-	$mstw_csvx_generate_query = get_posts( array( 	'post_type' => $mstw_csvx_generate_post_type, 
-													'post_status' => 'publish', 
-													'posts_per_page' => -1
-												)
-										);
-										
-	// Count the number of instances of the custom post type
+	mstw_log_msg( 'custom_fields = ' );
+	mstw_log_msg( $mstw_csvx_generate_custom_fields );
+	
+	mstw_log_msg( 'teams custom fields = ' );
+	mstw_log_msg( $fields_map['teams'] );
+	
+	if ( $mstw_csvx_generate_post_type == 'teams' ) {
+		$mstw_csvx_generate_query = get_terms(  'teams' );
+		//mstw_log_msg( 'teams data: ');
+		//mstw_log_msg( get_terms( 'teams' ) );
+	}
+	else {
+		// Query the DB for all instances of the custom post type
+		$mstw_csvx_generate_query = get_posts( array( 	'post_type' => $mstw_csvx_generate_post_type, 
+														'post_status' => 'publish', 
+														'posts_per_page' => -1
+													 )
+											  );
+	}	
+	
+	// Count the number of instances of the custom post type or taxonomy
 	$mstw_csvx_count_posts = count( $mstw_csvx_generate_query );
 	//mstw_log_msg( 'post type= ' . $mstw_csvx_generate_post_type . ' nbr of posts= ' . $mstw_csvx_count_posts );
 
-	if ( $mstw_csvx_count_posts == 0 ) {
+	if ( $mstw_csvx_count_posts <= 0 ) {
 		mstw_log_msg( 'No posts found for type ' . $mstw_csvx_generate_post_type );
 		//
 		//could use a user msg too, but the setup is very weird
 		//
 	}
+	else {
 		// Build an array of the custom field values
 		$mstw_csvx_generate_value_arr = array();
 		$i = 0; 
 		foreach ( $mstw_csvx_generate_query as $post ) {
-			setup_postdata($post);	
+			
+			if ( $mstw_csvx_generate_post_type != 'teams' ) {
+				//$mstw_csvx_generate_post_values['post_title'] = array( get_the_title( $post->ID ) );
+				//$mstw_csvx_generate_post_values['post_slug'] = array( get_post( $post->ID )->post_name );
+			
+				setup_postdata($post);	
 
-			// get the custom field values for each instance of the custom post type 
-			$mstw_csvx_generate_post_values = get_post_custom( $post->ID );
-			$mstw_csvx_generate_post_values['post_title'] = array( get_the_title( $post->ID ) );
-			$mstw_csvx_generate_post_values['post_slug'] = array( get_post( $post->ID )->post_name );
+				// get the custom field values for each instance of the custom post type 
+				$mstw_csvx_generate_post_values = get_post_custom( $post->ID );
+				$mstw_csvx_generate_post_values['post_title'] = array( get_the_title( $post->ID ) );
+				$mstw_csvx_generate_post_values['post_slug'] = array( get_post( $post->ID )->post_name );
+			}
+			else {
+				//Special handling for taxonomies
+				$mstw_csvx_generate_post_values['team_name'] = array( $post->name ) ;
+				$mstw_csvx_generate_post_values['team_slug'] = array( $post->slug );
+				$mstw_csvx_generate_post_values['team_description'] = array( $post->description );
+			}
 			if ( $mstw_csvx_generate_post_type == 'mstw_ss_venue' ) {
 				$mstw_csvx_generate_post_values['venue_group'] = array( 'venue_group' );
 			}
 			else if ( $mstw_csvx_generate_post_type == 'mstw_ss_game' ) {
 				$mstw_csvx_generate_post_values['game_scoreboard'] = array( 'game_scoreboard' );
 			}
-			if ( $mstw_csvx_generate_post_type == 'player' ) {
+			else if ( $mstw_csvx_generate_post_type == 'player' ) {
 				$mstw_csvx_generate_post_values['teams'] = array( 'teams' );
 				$mstw_csvx_generate_post_values['player_bio'] = array( 'player_bio' );
 			}
+			else if ( $mstw_csvx_generate_post_type == 'teams' ) {
+				$mstw_csvx_generate_post_values['name'] = array( 'team_name' );
+				$mstw_csvx_generate_post_values['slug'] = array( 'team_slug' );
+				$mstw_csvx_generate_post_values['description'] = array( 'team' );
+				
+			}
 			
+			//mstw_log_msg( '$mstw_csvx_generate_custom_fields[\'selectinput\']: ' );
+			//mstw_log_msg( $mstw_csvx_generate_custom_fields['selectinput'] );
 			foreach ( $mstw_csvx_generate_custom_fields['selectinput'] as $key=>$value ) {
 				// check if each custom field value matches a custom field that is being exported
 				if ( array_key_exists( $key, $mstw_csvx_generate_post_values ) ) {
@@ -105,7 +146,7 @@ function mstw_csvx_generate( $input_post_type ) {
 			
 			$i++; 
 			
-		}
+		} //End: foreach ( $mstw_csvx_generate_query as $post )
 		
 		// create a new array of values that reorganizes them in a new multidimensional array where each sub-array contains all of the values for one custom post instance
 		$mstw_csvx_generate_value_arr_new = array();
@@ -157,10 +198,11 @@ function mstw_csvx_generate( $input_post_type ) {
 		}
 		
 		// Close the file stream
-		fclose($fh);
-		
-		// Make sure nothing else is sent, our file is done
-		exit;
+		fclose($fh);	
+	}
+	
+	// Make sure nothing else is sent, our file is done
+	exit;
 	
 } //End: mstw_csvx_generate()
 
@@ -312,6 +354,32 @@ function mstw_csvx_set_value( $mstw_csvx_generate_post_values, $key, $post_type 
 					}
 				}
 				//mstw_log_msg( '$ret_val = ' . $ret_val );
+			}
+			break;
+		
+		case 'teams':
+			//mstw_log_msg( 'in case teams $key= ' . $key );
+			//$mstw_csvx_generate_post_values, $key, $post_type
+			//if ( array_key_exists( $key, $mstw_csvx_generate_post_values  ) ) {
+				//mstw_log_msg( '$mstw_csvx_generate_post_values' );
+				//mstw_log_msg( $mstw_csvx_generate_post_values );
+			//}
+			//else {
+			//	mstw_log_msg( 'key: ' . $key . ' does not exist' );
+			//}
+			switch( $key ) {
+				case 'name': 
+					$ret_val = $mstw_csvx_generate_post_values['team_name'][0];
+					break;
+				case 'slug':
+					$ret_val = $mstw_csvx_generate_post_values['team_slug'][0];
+					break;
+				case 'description':
+					$ret_val = $mstw_csvx_generate_post_values['team_description'][0];
+					break;
+				default:
+					$ret_val = "Unknown key: {$key}";
+					break;
 			}
 			break;
 		case 'game_locations':
@@ -531,6 +599,13 @@ function mstw_csvx_get_fields_map( ) {
 								
 								),
 						),
+					'teams' => 
+						array( 'selectinput' => 
+							array(	'name'			=> 'team_name',
+									'slug'			=> 'team_slug',
+									'description'	=> 'team_description',
+									),
+							),
 					
 				);
 
