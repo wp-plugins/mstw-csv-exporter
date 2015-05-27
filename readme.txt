@@ -3,7 +3,7 @@ Contributors: MarkODonnell
 Donate link: http://shoalsummitsolutions.com
 Tags: CSV, CSV Export, MSTW, MSTW Plugins, Game Locations, Game Schedules, Game Schedules & Scoreboards 
 Requires at least: 3.3.1
-Tested up to: 4.0
+Tested up to: 4.2.2
 Stable tag: 1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -12,11 +12,9 @@ Exports various MSTW custom post types to CSV format files.
 
 == Description ==
 
-The MSTW CSV Exporter plugin exports custom post types from the MSTW Game Schedules, MSTW Game Locations, and MSTW Schedules & Scoreboards plugins to CSV format files for import into the MSTW Schedules & Scoreboards plugin. This allows the migration of plugin data across sites.
+The MSTW CSV Exporter plugin exports custom post types from the MSTW Game Schedules, MSTW Game Locations, and MSTW Schedules & Scoreboards plugins to CSV format files for import into the MSTW Schedules & Scoreboards plugin, and the MSTW Team Roster (3.2.1) plugin for import into the MTW Team Rosters (4.0 and beyond) plugin. This data export/import is necessary to allow the migration of plugin data across sites.
 
-Version 1.0 supported migration of the MSTW Game Locations and MSTW Game Schedules plugins to the new MSTW Schedules & Scoreboards plugin. The old plugins have been integrated into the new plugin, which changed the data structures (in the custom post types) to support more robust data migration across sites running the Schedules & Scoreboards plugin.
-
-Version 1.1 added the ability to export the new MSTW Schedules & Scoreboards plugin data tables - Games, Teams, Schedules, Sports, and Venues - AND the associated Venue Group and Scoreboard taxonomies, for import to another site.
+Version 1.2 adds the ability to export the MSTW Team Rosters (v 3.2.1) data structures - Players and Teams - for import to MSTW Team Rosters 4.0. It allows player photos to be moved from site to site automagically in the import/export process, or not if you are upgrading Team Rosters on a site. See [the Team Rosters CSV Import man page](http://shoalsummitsolutions.com/tr-loading-csv-files/)</a> for more information.
 
 = Helpful Links =
 * [**When all else fails try reading the user's manual at shoalsummitsolutions.com -»**](http://shoalsummitsolutions.com/category/csvx-plugin)
@@ -46,7 +44,8 @@ Nothing to note.
 == Changelog ==
 
 = 1.2 =
-* Added the ability to export the Team Rosters CPT (players) and taxonomy (teams)
+* Added the ability to export the Team Rosters CPT (players) and taxonomy (teams). Also allows player photos to be moved from site to site automagically in the import/export process. See [the Team Rosters CSV Import man page](http://shoalsummitsolutions.com/tr-loading-csv-files/)</a> for more information.
+* Updated the MSTW Utility Functions to the latest version.
 
 = 1.1 =
 * Added the ability to export MSTW Schedules & Scoreboards CPT's - schedules, games, teams, sports, and venues - including the venue groups for the venues and scoreboards for the games.

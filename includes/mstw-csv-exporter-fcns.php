@@ -125,7 +125,9 @@ function mstw_csvx_generate( $input_post_type ) {
 			}
 			else if ( $mstw_csvx_generate_post_type == 'player' ) {
 				$mstw_csvx_generate_post_values['teams'] = array( 'teams' );
+				$mstw_csvx_generate_post_values['player_photo'] = array( 'player_photo' );
 				$mstw_csvx_generate_post_values['player_bio'] = array( 'player_bio' );
+				
 			}
 			else if ( $mstw_csvx_generate_post_type == 'teams' ) {
 				$mstw_csvx_generate_post_values['name'] = array( 'team_name' );
@@ -343,6 +345,17 @@ function mstw_csvx_set_value( $mstw_csvx_generate_post_values, $key, $post_type 
 					} //End: if( $game_obj !== null ) {
 				} //End: if ( isset( $mstw_csvx_generate_post_values['post_slug'] ) ) {
 			} //End: if ( $key == 'teams' ) {
+			else if ( $key == 'player_photo' ) {
+				mstw_log_msg( 'in $key == \'player_photo\' ... ' );
+				$ret_val = '';
+				if ( isset( $mstw_csvx_generate_post_values['post_slug'] ) ) {
+					$slug = $mstw_csvx_generate_post_values['post_slug'][0];
+					$player_obj = get_page_by_path( $slug, OBJECT, 'player' );
+					if( $player_obj !== null ) {
+						mstw_log_msg( 'found a player object: ' . $player_obj->ID );
+					}
+				}
+			}
 			else if ( $key == 'player_bio' ) {
 				//mstw_log_msg( 'in $key == \'player_bio\' ... ' );
 				$ret_val = '';
@@ -592,11 +605,12 @@ function mstw_csvx_get_fields_map( ) {
 								'_mstw_tr_bats'			=> 'player_bats',
 								'_mstw_tr_throws'		=> 'player_throws',
 								'_mstw_tr_other'		=> 'player_other',
-								// player bio is post content
-								'player_bio'			=> 'player_bio',
-								// teams taxonomy
+								//teams taxonomy
 								'teams'	 				=> 'player_teams',
-								
+								//featured image (thumbnail)
+								'player_photo'			=> 'player_photo',
+								//player bio is post content
+								'player_bio'			=> 'player_bio',
 								),
 						),
 					'teams' => 
