@@ -346,13 +346,18 @@ function mstw_csvx_set_value( $mstw_csvx_generate_post_values, $key, $post_type 
 				} //End: if ( isset( $mstw_csvx_generate_post_values['post_slug'] ) ) {
 			} //End: if ( $key == 'teams' ) {
 			else if ( $key == 'player_photo' ) {
-				mstw_log_msg( 'in $key == \'player_photo\' ... ' );
 				$ret_val = '';
+				//mstw_log_msg( 'in $key == \'player_photo\' ... ' );
 				if ( isset( $mstw_csvx_generate_post_values['post_slug'] ) ) {
 					$slug = $mstw_csvx_generate_post_values['post_slug'][0];
 					$player_obj = get_page_by_path( $slug, OBJECT, 'player' );
 					if( $player_obj !== null ) {
-						mstw_log_msg( 'found a player object: ' . $player_obj->ID );
+						//mstw_log_msg( 'found a player object for player: ' . $slug );
+						$thumbnail_id = get_post_thumbnail_id( $player_obj->ID );
+						if( null !== $thumbnail_id ) {
+								//mstw_log_msg( 'found a thumbnail: ' . $thumbnail_id );
+								$ret_val = wp_get_attachment_url( $thumbnail_id );
+						}
 					}
 				}
 			}

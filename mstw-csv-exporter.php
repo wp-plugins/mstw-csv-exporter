@@ -3,7 +3,7 @@
 Plugin Name: MSTW CSV Exporter
 Plugin URI: http://wordpress.org/extend/plugins/
 Description: Exports custom post types in the MSTW Game Schedules and MSTW Game Locations plugins to CSV format files for import into the MSTW Schedules & Scoreboards plugin.
-Version: 1.1
+Version: 1.2
 Author: Mark O'Donnell
 Author URI: http://shoalsummitsolutions.com
 Text Domain: mstw-csv-exporter
