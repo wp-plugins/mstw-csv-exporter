@@ -43,6 +43,9 @@ function mstw_csvx_generate( $input_post_type ) {
 					   __( 'Team Rosters (3.1.2 & before) - Players', 'mstw-csv-exporter' )	=> 'player', 
 					   __( 'Team Rosters (3.1.2 & before) - Teams', 'mstw-csv-exporter' )	=> 'teams',
 					   
+					   __( 'Team Rosters (4.0 & later) - Players', 'mstw-csv-exporter' )	=> 'mstw_tr_player', 
+					   __( 'Team Rosters (4.0 & later) - Teams', 'mstw-csv-exporter' )	=> 'mstw_tr_team',
+					   
 					   __( 'Schedules & Scoreboards - Games', 'mstw-csv-exporter' ) => 'mstw_ss_game',
 					   __( 'Schedules & Scoreboards - Schedules', 'mstw-csv-exporter' ) => 'mstw_ss_schedule',
 					   __( 'Schedules & Scoreboards - Sports', 'mstw-csv-exporter' ) => 'mstw_ss_sport',
@@ -55,8 +58,8 @@ function mstw_csvx_generate( $input_post_type ) {
 	//mstw_log_msg( '$input_post_type = ' . $input_post_type );
 	$mstw_csvx_generate_post_type = $type_map[$input_post_type];
 	
-	mstw_log_msg( 'input post_type = ' . $input_post_type );
-	mstw_log_msg( 'new post type = ' . $mstw_csvx_generate_post_type );
+	//mstw_log_msg( 'input post_type = ' . $input_post_type );
+	//mstw_log_msg( 'new post type = ' . $mstw_csvx_generate_post_type );
 
 	// Get the custom fields (for CPT or CT) being exported
 	//$mstw_csvx_generate_custom_fields = get_option('mstw_csvx_custom_fields');
@@ -64,43 +67,50 @@ function mstw_csvx_generate( $input_post_type ) {
 		
 	$mstw_csvx_generate_custom_fields = $fields_map[$mstw_csvx_generate_post_type];
 	
-	mstw_log_msg( 'custom_fields = ' );
-	mstw_log_msg( $mstw_csvx_generate_custom_fields );
+	//mstw_log_msg( 'custom_fields = ' );
+	//mstw_log_msg( $mstw_csvx_generate_custom_fields );
 	
-	mstw_log_msg( 'teams custom fields = ' );
-	mstw_log_msg( $fields_map['teams'] );
-	
-	if ( $mstw_csvx_generate_post_type == 'teams' ) {
-		$mstw_csvx_generate_query = get_terms(  'teams' );
-		//mstw_log_msg( 'teams data: ');
-		//mstw_log_msg( get_terms( 'teams' ) );
+	//
+	// Taxonomies ('teams' and 'mstw_tr_team') require special handling
+	//
+	if ( 'teams' == $mstw_csvx_generate_post_type or 
+		 'mstw_tr_team' == $mstw_csvx_generate_post_type ) {
+		// Get all terms for the taxonomy
+		$mstw_csvx_generate_query = get_terms(  $mstw_csvx_generate_post_type );
+		//mstw_log_msg( 'terms for ' . $mstw_csvx_generate_post_type . ' =' );
+		//mstw_log_msg( $mstw_csvx_generate_query );
 	}
 	else {
-		// Query the DB for all instances of the custom post type
+		// Get all instances of the custom post type
 		$mstw_csvx_generate_query = get_posts( array( 	'post_type' => $mstw_csvx_generate_post_type, 
 														'post_status' => 'publish', 
 														'posts_per_page' => -1
 													 )
-											  );
+													);
 	}	
 	
-	// Count the number of instances of the custom post type or taxonomy
+	//
+	// Check that we have posts (or terms) before processing them
+	//
 	$mstw_csvx_count_posts = count( $mstw_csvx_generate_query );
 	//mstw_log_msg( 'post type= ' . $mstw_csvx_generate_post_type . ' nbr of posts= ' . $mstw_csvx_count_posts );
 
 	if ( $mstw_csvx_count_posts <= 0 ) {
 		mstw_log_msg( 'No posts found for type ' . $mstw_csvx_generate_post_type );
 		//
-		//could use a user msg too, but the setup is very weird
+		// could use a user msg too, but the setup is very weird
 		//
 	}
 	else {
 		// Build an array of the custom field values
-		$mstw_csvx_generate_value_arr = array();
+		$mstw_csvx_generate_value_arr = array( );
 		$i = 0; 
+		
 		foreach ( $mstw_csvx_generate_query as $post ) {
-			
-			if ( $mstw_csvx_generate_post_type != 'teams' ) {
+			//
+			// Taxonomies ('teams' and 'mstw_tr_team') require special handling
+			//
+			if ( $mstw_csvx_generate_post_type != 'teams' and $mstw_csvx_generate_post_type != 'mstw_tr_team') {
 				//$mstw_csvx_generate_post_values['post_title'] = array( get_the_title( $post->ID ) );
 				//$mstw_csvx_generate_post_values['post_slug'] = array( get_post( $post->ID )->post_name );
 			
@@ -116,6 +126,9 @@ function mstw_csvx_generate( $input_post_type ) {
 				$mstw_csvx_generate_post_values['team_name'] = array( $post->name ) ;
 				$mstw_csvx_generate_post_values['team_slug'] = array( $post->slug );
 				$mstw_csvx_generate_post_values['team_description'] = array( $post->description );
+				$mstw_csvx_generate_post_values['team_ss_link'] = array( 'SS Link Test' );
+				//mstw_log_msg( '$mstw_csvx_generate_post_values = ' );
+				//mstw_log_msg( $mstw_csvx_generate_post_values );
 			}
 			if ( $mstw_csvx_generate_post_type == 'mstw_ss_venue' ) {
 				$mstw_csvx_generate_post_values['venue_group'] = array( 'venue_group' );
@@ -132,7 +145,20 @@ function mstw_csvx_generate( $input_post_type ) {
 			else if ( $mstw_csvx_generate_post_type == 'teams' ) {
 				$mstw_csvx_generate_post_values['name'] = array( 'team_name' );
 				$mstw_csvx_generate_post_values['slug'] = array( 'team_slug' );
-				$mstw_csvx_generate_post_values['description'] = array( 'team' );
+				$mstw_csvx_generate_post_values['description'] = array( 'team_description' );
+				
+			}
+			else if ( $mstw_csvx_generate_post_type == 'mstw_tr_team' ) {
+				$mstw_csvx_generate_post_values['name'] = array( 'team_name' );
+				$mstw_csvx_generate_post_values['slug'] = array( 'team_slug' );
+				$mstw_csvx_generate_post_values['description'] = array( 'team_description' );
+				$mstw_csvx_generate_post_values['team_ss_link'] = array( 'team_ss_link' );
+				
+			}
+			else if ( $mstw_csvx_generate_post_type == 'mstw_tr_player' ) {
+				$mstw_csvx_generate_post_values['player_teams'] = array( 'mstw_tr_team' );
+				$mstw_csvx_generate_post_values['player_photo'] = array( 'player_photo' );
+				$mstw_csvx_generate_post_values['player_bio'] = array( 'player_bio' );
 				
 			}
 			
@@ -320,21 +346,28 @@ function mstw_csvx_set_value( $mstw_csvx_generate_post_values, $key, $post_type 
 			} //End: if ( $key == 'game_scoreboard' ) {
 			break;
 		case 'player':
-			//mstw_log_msg( 'in mstw_csvx_set_value post_type = player, $key= ' . $key );
+		case 'mstw_tr_player':
+			//mstw_log_msg( 'in mstw_csvx_set_value post_type/key= ' . $post_type .'/' .  $key );
 			//if ( $key == 'player_bio' ) die( 'found it' );
-			if ( $key == 'teams' ) {
-				//mstw_log_msg( 'in mstw_csvx_set_value key = teams' );
+			if ( 'teams' == $key or 'player_teams' == $key ) {
 				$ret_val = '';
 				if ( isset( $mstw_csvx_generate_post_values['post_slug'] ) ) {
 					$slug = $mstw_csvx_generate_post_values['post_slug'][0];
 					//mstw_log_msg( 'in mstw_csvx_set_value $slug= ' . $slug );
 					
-					$player_obj = get_page_by_path( $slug, OBJECT, 'player' );
+					$player_obj = ( 'player' == $post_type ) ? get_page_by_path( $slug, OBJECT, 'player' ) :  get_page_by_path( $slug, OBJECT, 'mstw_tr_player' );
+					
+					//mstw_log_msg( '$player_obj =' );
+					//mstw_log_msg( $player_obj );
+					
 					if( $player_obj !== null ) {
 						//mstw_log_msg( $venue_obj );
 						$player_id = $player_obj->ID;
 						//mstw_log_msg( 'in mstw_csvx_set_value $player_id= ' . $player_id );
-						$teams = get_the_terms( $player_id, 'teams' );
+						$teams = ( 'player' == $post_type ) ? get_the_terms( $player_id, 'teams' ) : get_the_terms( $player_id, 'mstw_tr_team' );
+						
+						//mstw_log_msg( '$teams =' );
+						//mstw_log_msg( $teams );
 						
 						if ( $teams ) {
 							foreach( $teams as $team ) {
@@ -350,7 +383,7 @@ function mstw_csvx_set_value( $mstw_csvx_generate_post_values, $key, $post_type 
 				//mstw_log_msg( 'in $key == \'player_photo\' ... ' );
 				if ( isset( $mstw_csvx_generate_post_values['post_slug'] ) ) {
 					$slug = $mstw_csvx_generate_post_values['post_slug'][0];
-					$player_obj = get_page_by_path( $slug, OBJECT, 'player' );
+					$player_obj = ( 'player' == $post_type ) ? get_page_by_path( $slug, OBJECT, 'player' ) :  get_page_by_path( $slug, OBJECT, 'mstw_tr_player' );
 					if( $player_obj !== null ) {
 						//mstw_log_msg( 'found a player object for player: ' . $slug );
 						$thumbnail_id = get_post_thumbnail_id( $player_obj->ID );
@@ -376,14 +409,15 @@ function mstw_csvx_set_value( $mstw_csvx_generate_post_values, $key, $post_type 
 			break;
 		
 		case 'teams':
-			//mstw_log_msg( 'in case teams $key= ' . $key );
+		case 'mstw_tr_team':
+			//mstw_log_msg( 'in case ' . $post_type . ' $key= ' . $key );
 			//$mstw_csvx_generate_post_values, $key, $post_type
 			//if ( array_key_exists( $key, $mstw_csvx_generate_post_values  ) ) {
 				//mstw_log_msg( '$mstw_csvx_generate_post_values' );
 				//mstw_log_msg( $mstw_csvx_generate_post_values );
 			//}
 			//else {
-			//	mstw_log_msg( 'key: ' . $key . ' does not exist' );
+				//mstw_log_msg( 'key: ' . $key . ' does not exist' );
 			//}
 			switch( $key ) {
 				case 'name': 
@@ -394,6 +428,31 @@ function mstw_csvx_set_value( $mstw_csvx_generate_post_values, $key, $post_type 
 					break;
 				case 'description':
 					$ret_val = $mstw_csvx_generate_post_values['team_description'][0];
+					break;
+				case 'team_ss_link':
+					$ret_val = '';
+					//mstw_log_msg( '$post_type/$key = ' . $post_type . '/' . $key );
+					$team = $mstw_csvx_generate_post_values['team_slug'][0];
+					//mstw_log_msg( '$team = ' . $team );
+					
+					if( $team && post_type_exists( 'mstw_ss_team' ) ) {
+						//Check that $team is linked to a team in the MSTW S&S DB
+						// $team is TR team slug; $team_obj is SS team obj
+						if( $team_obj = mstw_tr_find_team_in_ss( $team ) ) {
+							//mstw_log_msg( 'found $team_obj in SS ...' );
+							//mstw_log_msg( 'slug= ' . $team_obj->post_name );
+							
+							$ret_val = $team_obj->post_name;
+							
+							
+						} //End: if( $team_obj = mstw_tr_find_team_in_ss( $team ) )
+							
+						//else {
+						//	mstw_log_msg( 'No team found in S&S for ' . $team );
+						//}
+				
+		} //End: if( $team && post_type_exists( 'mstw_ss_team' ) )
+					
 					break;
 				default:
 					$ret_val = "Unknown key: {$key}";
@@ -590,6 +649,8 @@ function mstw_csvx_get_fields_map( ) {
 								'venue_group'	=> 'venue_group',
 								),
 						),
+						
+				// TEAM ROSTERS 3.1.2
 				'player' => 
 					array( 'selectinput' => 
 						array(	'post_title'	=> 'player_title',
@@ -623,6 +684,44 @@ function mstw_csvx_get_fields_map( ) {
 							array(	'name'			=> 'team_name',
 									'slug'			=> 'team_slug',
 									'description'	=> 'team_description',
+									),
+							),
+							
+					// TEAM ROSTERS 4.0
+					'mstw_tr_team' => 
+						array( 'selectinput' => 
+							array(	'name'			=> 'team_name',
+									'slug'			=> 'team_slug',
+									'description'	=> 'team_description',
+									'team_ss_link'	=> 'team_ss_link',
+									),
+							),
+					'mstw_tr_player' => 
+						array( 'selectinput' => 
+							array(	'post_title'	=> 'player_title',
+									'post_slug'		=> 'player_slug',
+								
+									'player_first_name'	=> 'player_first_name',
+									'player_last_name' 	=> 'player_last_name',
+									'player_number' 	=> 'player_number',
+									'player_height' 	=> 'player_height',
+									'player_weight' 	=> 'player_weight',
+									'player_position' 	=> 'player_position',
+									'player_year'		=> 'player_year',
+									'player_experience'	=> 'player_experience',
+									'player_age'		=> 'player_age',
+									'player_home_town'	=> 'player_home_town',
+									'player_last_school' => 'player_last_school',
+									'player_country'	=> 'player_country',
+									'player_bats'		=> 'player_bats',
+									'player_throws'		=> 'player_throws',
+									'player_other'		=> 'player_other',
+									//teams taxonomy
+									'player_teams'	 	=> 'player_teams',
+									//featured image (thumbnail)
+									'player_photo'		=> 'player_photo',
+									//player bio is post content
+									'player_bio'		=> 'player_bio',
 									),
 							),
 					

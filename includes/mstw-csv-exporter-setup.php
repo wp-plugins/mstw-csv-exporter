@@ -98,8 +98,9 @@ if(!class_exists('MSTW_CSVX_Settings')) {
 				
 			} //End: post type mstw_ss_game
 			
-			
-			
+			//
+			// Team Rosters version 3.1.2
+			//
 			if( post_type_exists( 'player' ) ) {
 				add_settings_section(
 					'mstw_csvx_team_rosters-section', 
@@ -114,7 +115,26 @@ if(!class_exists('MSTW_CSVX_Settings')) {
 					'mstw_csvx_template', 
 					'mstw_csvx_team_rosters-section'
 				);
-			}
+			} //End: post type player
+			
+			//
+			// Team Rosters version 4.0+
+			//
+			if( post_type_exists( 'mstw_tr_player' ) ) {
+				add_settings_section(
+					'mstw_csvx_team_rosters-4-section', 
+					'', //__( 'CSV Team Rosters (4.0 & later)', 'mstw-csv-exporter' ),
+					array( &$this, 'blank_section_text' ), 
+					'mstw_csvx_template'
+				);
+				add_settings_field(
+					'mstw_csvx_post_type', 
+					__( 'Team Rosters (4.0 & later):', 'mstw-csv-exporter' ), 
+					array( &$this, 'team_rosters_4_settings_fields' ), 
+					'mstw_csvx_template', 
+					'mstw_csvx_team_rosters-4-section'
+				);
+			} //End: post type mstw_tr_player
            
         } // END public static function activate
         
@@ -132,12 +152,18 @@ if(!class_exists('MSTW_CSVX_Settings')) {
 			if( !post_type_exists( 'player' ) ) {
 				echo '<p class="csvx-msg">' . __( 'Install and activate the MSTW Team Rosters plugin (pre-version 4.0) before exporting players & teams.', 'mstw-csv-exporter' ) . '</p>';
 			}
+			if( !post_type_exists( 'mstw_tr_player' ) ) {
+				echo '<p class="csvx-msg">' . __( 'Install and activate the MSTW Team Rosters plugin (4.0 or later) before exporting players & teams.', 'mstw-csv-exporter' ) . '</p>';
+			}
         }
 		
-		 public function blank_section_text( $section ) {
-			 // nada
-			 //echo 'This is the team rosters pre 4.0 section.';
-		 }
+		//
+		// Dumb function to remove settings section text (in case we want to add something later
+		//
+		public function blank_section_text( $section ) {
+			// nada
+			//echo 'This is the team rosters pre 4.0 section.';
+		}
 		
 		//
 		// Game Locations plugin
@@ -165,10 +191,9 @@ if(!class_exists('MSTW_CSVX_Settings')) {
 			$this->create_settings_fields( 'schedules_scoreboards' );
 			
 		}
-		
-		
+
 		//
-		//team_rosters_settings_fields
+		// Team Rosters 3.1.2 settings fields
 		//
         public function team_rosters_settings_fields( ) {
 			//mstw_log_msg( $section['id'] );
@@ -176,9 +201,18 @@ if(!class_exists('MSTW_CSVX_Settings')) {
 			$this->create_settings_fields( 'team_rosters' );
 		}
 		
-		/**
-         * This function creates controls for all settings sections
-         */
+		//
+		// Team Rosters 4.0+ settings fields
+		//
+        public function team_rosters_4_settings_fields( ) {
+			//mstw_log_msg( $section['id'] );
+	
+			$this->create_settings_fields( 'team_rosters_4' );
+		}
+		
+		//
+        // This function creates controls for all settings sections
+        //
 		public function create_settings_fields( $section='team_rosters' ) {
 		
 				//This is a patch
@@ -190,7 +224,8 @@ if(!class_exists('MSTW_CSVX_Settings')) {
 				switch( $section ) {
 					case 'schedules_scoreboards':
 						if ( post_type_exists( 'mstw_ss_game' ) ) {
-							$options = ( $options == '' ) ? __( 'Schedules & Scoreboards', 'mstw-csv-exporter' ) : $options;
+							//$options = ( $options == '' ) ? __( 'Schedules & Scoreboards', 'mstw-csv-exporter' ) : $options;
+							$options = __( 'Schedules & Scoreboards', 'mstw-csv-exporter' );
 							$items[$i] = __( 'Schedules & Scoreboards - Games', 'mstw-csv-exporter' );
 							$i++;
 							$items[$i] = __( 'Schedules & Scoreboards - Schedules', 'mstw-csv-exporter' );
@@ -206,11 +241,22 @@ if(!class_exists('MSTW_CSVX_Settings')) {
 						
 					case 'team_rosters':
 						if ( post_type_exists( 'player' ) ) {
-							$options = ( $options == '' ) ? __( 'Team Rosters (3.1.2 & before)', 'mstw-csv-exporter' ) : $options;
-							//$options = __( 'Team Rosters (3.1.2 & before)', 'mstw-csv-exporter' );
+							//$options = ( $options == '' ) ? __( 'Team Rosters (3.1.2 & before)', 'mstw-csv-exporter' ) : $options;
+							$options = __( 'Team Rosters (3.1.2 & before)', 'mstw-csv-exporter' );
 							$items[$i] = __( 'Team Rosters (3.1.2 & before) - Players', 'mstw-csv-exporter' );
 							$i++;
 							$items[$i] = __( 'Team Rosters (3.1.2 & before) - Teams', 'mstw-csv-exporter' );
+							$i++;
+						}
+						break;
+						
+					case 'team_rosters_4':
+						if ( post_type_exists( 'mstw_tr_player' ) ) {
+							//$options = ( $options == '' ) ? __( 'Team Rosters (4.0 & later)', 'mstw-csv-exporter' ) : $options;
+							$options = __( 'Team Rosters (4.0 & later)', 'mstw-csv-exporter' );
+							$items[$i] = __( 'Team Rosters (4.0 & later) - Players', 'mstw-csv-exporter' );
+							$i++;
+							$items[$i] = __( 'Team Rosters (4.0 & later) - Teams', 'mstw-csv-exporter' );
 							$i++;
 						}
 						break;
@@ -225,7 +271,8 @@ if(!class_exists('MSTW_CSVX_Settings')) {
 					
 					case 'game_schedules':
 						if ( post_type_exists( 'scheduled_games' ) ) {
-							$options = ( $options == '' ) ? __( 'Game Schedules - Games', 'mstw-csv-exporter' ) : $options;
+							//$options = ( $options == '' ) ? __( 'Game Schedules - Games', 'mstw-csv-exporter' ) : $options;
+							$options = __( 'Game Schedules - Games', 'mstw-csv-exporter' );
 							$items[$i] = __( 'Game Schedules - Games', 'mstw-csv-exporter' );
 							$i++;
 							$items[$i] = __( 'Game Schedules - Schedules', 'mstw-csv-exporter' );
@@ -251,76 +298,9 @@ if(!class_exists('MSTW_CSVX_Settings')) {
 			
 		} //End: create_settings_fields()
         
-        /**
-         * This function provides text inputs for settings fields
-         */
-        public function settings_field_select_post_type( ) {
-		
-			//This is a patch
-			$options = '';
-			
-			$i = 0;
-			$items = array();
-			//this is the original game locations, now deprecated
-
-			//this is the original game schedules, now deprecated
-			if ( post_type_exists( 'scheduled_games' ) ) {
-				if ( $options == '' ) {
-					$options = __( 'Game Schedules - Games', 'mstw-csv-exporter' );
-				}
-				// if we have games, then we have all three
-				$items[$i] = __( 'Game Schedules - Games', 'mstw-csv-exporter' );
-				$i++;
-				$items[$i] = __( 'Game Schedules - Schedules', 'mstw-csv-exporter' );
-				$i++;
-				$items[$i] = __( 'Game Schedules - Teams', 'mstw-csv-exporter' );
-				$i++;
-			}
-			
-			//this is the original team rosters, now deprecated
-			/*
-			if ( post_type_exists( 'player' ) ) {
-				$options = ( $options == '' ) ? __( 'Team Rosters (3.1.2 & earlier)', 'mstw-csv-exporter' ) : $options;
-				//$options = __( 'Team Rosters (3.1.2 & earlier)', 'mstw-csv-exporter' );
-				$items[$i] = __( 'Team Rosters (3.1.2 & earlier) - Players', 'mstw-csv-exporter' );
-				$i++;
-				$items[$i] = __( 'Team Rosters (3.1.2 & earlier) - Teams', 'mstw-csv-exporter' );
-				$i++;
-			}
-			*/
-			
-			if ( post_type_exists( 'mstw_ss_game' ) ) {
-				if ( $options == '' ) {
-					$options = __( 'Schedules & Scoreboards - Games', 'mstw-csv-exporter' );
-				}
-				// if we have games, then we have all
-				$items[$i] = __( 'Schedules & Scoreboards - Games', 'mstw-csv-exporter' );
-				$i++;
-				$items[$i] = __( 'Schedules & Scoreboards - Schedules', 'mstw-csv-exporter' );
-				$i++;
-				$items[$i] = __( 'Schedules & Scoreboards - Sports', 'mstw-csv-exporter' );
-				$i++;
-				$items[$i] = __( 'Schedules & Scoreboards - Teams', 'mstw-csv-exporter' );
-				$i++;
-				$items[$i] = __( 'Schedules & Scoreboards - Venues', 'mstw-csv-exporter' );
-			}
-			
-            // echo a proper input type="text"
-			if ( $items ) {
-				foreach ( $items as $item ) {
-					$checked = ( $options == $item ) ? ' checked="checked" ' : '';
-					echo '<input type="radio" id="csvx_post_type_' . $item . '" name="mstw_csvx_post_type" value="' . $item . '" ' . $checked . '" />';
-					echo '<label for=csvx_post_type_' . $item . '> '. $item . '</label>';
-					echo ' <br />';
-				}
-			}
-        } //End: public function settings_field_select_post_type( )
-        
-		
-        /**
-         * add a menu
-         */		
-		
+        //
+        // Add the CSV Exporter menu
+        //		
         public function add_menu()
         {
             // Add a page to manage this plugin's settings
@@ -353,31 +333,3 @@ if(!class_exists('MSTW_CSVX_Settings')) {
     } // END class mstw_csvx_template_Settings
 } // END if(!class_exists('mstw_csvx_template_Settings'))
 
-function mstw_csvx_mstw_csvx_generate_post_meta_keys( $post_type ) {
-	global $wpdb;
-    $query = "
-        SELECT DISTINCT($wpdb->postmeta.meta_key) 
-        FROM $wpdb->posts 
-        LEFT JOIN $wpdb->postmeta 
-        ON $wpdb->posts.ID = $wpdb->postmeta.post_id 
-        WHERE $wpdb->posts.post_type = '%s' 
-        AND $wpdb->postmeta.meta_key != '' 
-        AND $wpdb->postmeta.meta_key NOT RegExp '(^[_0-9].+$)' 
-        AND $wpdb->postmeta.meta_key NOT RegExp '(^[0-9]+$)'
-    ";
-    $meta_keys = $wpdb->get_col( $wpdb->prepare( $query, $post_type ) );
-    set_transient( $post_type.'post_meta_keys', $meta_keys, 60*60*24 ); # 1 Day Expiration
-    return $meta_keys;
-}
-
-function mstw_csvx_get_post_meta_keys( $post_type ) {
-    $cache = get_transient( $post_type.'post_meta_keys' );
-    $meta_keys = $cache ? $cache : mstw_csvx_generate_post_meta_keys( $post_type );
-    return $meta_keys;
-}
-
-function mstw_csvx_checkboxes_fix( $input ) {
-   $options = get_option( 'mstw_csvx_custom_fields' );
-   $merged = $options;
-   $merged[] = $input;
-}
