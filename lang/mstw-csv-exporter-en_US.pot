@@ -1,0 +1,460 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: MSTW CSV Exporter\n"
+"POT-Creation-Date: 2015-06-10 18:55-0800\n"
+"PO-Revision-Date: 2015-06-10 18:56-0800\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.6.1\n"
+"X-Poedit-Basepath: ../..\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-SearchPath-0: mstw-csv-exporter\n"
+
+#: mstw-csv-exporter/includes/mstw-csv-exporter-fcns.php:37
+#: mstw-csv-exporter/includes/mstw-csv-exporter-setup.php:266
+#: mstw-csv-exporter/includes/mstw-csv-exporter-setup.php:267
+msgid "Game Locations - Locations"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-csv-exporter-fcns.php:39
+#: mstw-csv-exporter/includes/mstw-csv-exporter-setup.php:275
+#: mstw-csv-exporter/includes/mstw-csv-exporter-setup.php:276
+msgid "Game Schedules - Games"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-csv-exporter-fcns.php:40
+#: mstw-csv-exporter/includes/mstw-csv-exporter-setup.php:280
+msgid "Game Schedules - Teams"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-csv-exporter-fcns.php:41
+#: mstw-csv-exporter/includes/mstw-csv-exporter-setup.php:278
+msgid "Game Schedules - Schedules"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-csv-exporter-fcns.php:43
+#: mstw-csv-exporter/includes/mstw-csv-exporter-setup.php:246
+msgid "Team Rosters (3.1.2 & before) - Players"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-csv-exporter-fcns.php:44
+#: mstw-csv-exporter/includes/mstw-csv-exporter-setup.php:248
+msgid "Team Rosters (3.1.2 & before) - Teams"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-csv-exporter-fcns.php:46
+#: mstw-csv-exporter/includes/mstw-csv-exporter-setup.php:257
+msgid "Team Rosters (4.0 & later) - Players"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-csv-exporter-fcns.php:47
+#: mstw-csv-exporter/includes/mstw-csv-exporter-setup.php:259
+msgid "Team Rosters (4.0 & later) - Teams"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-csv-exporter-fcns.php:49
+#: mstw-csv-exporter/includes/mstw-csv-exporter-setup.php:229
+msgid "Schedules & Scoreboards - Games"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-csv-exporter-fcns.php:50
+#: mstw-csv-exporter/includes/mstw-csv-exporter-setup.php:231
+msgid "Schedules & Scoreboards - Schedules"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-csv-exporter-fcns.php:51
+#: mstw-csv-exporter/includes/mstw-csv-exporter-setup.php:233
+msgid "Schedules & Scoreboards - Sports"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-csv-exporter-fcns.php:52
+#: mstw-csv-exporter/includes/mstw-csv-exporter-setup.php:235
+msgid "Schedules & Scoreboards - Teams"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-csv-exporter-fcns.php:53
+#: mstw-csv-exporter/includes/mstw-csv-exporter-setup.php:237
+msgid "Schedules & Scoreboards - Venues"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-csv-exporter-setup.php:61
+msgid "Game Locations (Deprecated):"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-csv-exporter-setup.php:77
+msgid "Game Schedules (Deprecated):"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-csv-exporter-setup.php:93
+msgid "Schedules & Scoreboards:"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-csv-exporter-setup.php:113
+msgid "Team Rosters (3.1.2 & before):"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-csv-exporter-setup.php:132
+msgid "Team Rosters (4.0 & later):"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-csv-exporter-setup.php:142
+msgid ""
+"Select the data table to export, save it, then click Export. Export file "
+"will be named \"Table-Date_Time-export.csv\". For example, "
+"\"Games-20140214_043307-export.csv\"."
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-csv-exporter-setup.php:144
+msgid ""
+"Install and activate the MSTW Game Locations plugin before exporting "
+"locations (venues)."
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-csv-exporter-setup.php:147
+msgid ""
+"Install and activate the MSTW Game Schedules plugin before exporting "
+"schedules, teams, and games."
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-csv-exporter-setup.php:150
+msgid ""
+"Install and activate the MSTW Schedules & Scoreboards plugin before "
+"exporting schedules, teams, games, sports, and venues."
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-csv-exporter-setup.php:153
+msgid ""
+"Install and activate the MSTW Team Rosters plugin (pre-version 4.0) before "
+"exporting players & teams."
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-csv-exporter-setup.php:156
+msgid ""
+"Install and activate the MSTW Team Rosters plugin (4.0 or later) before "
+"exporting players & teams."
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-csv-exporter-setup.php:228
+msgid "Schedules & Scoreboards"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-csv-exporter-setup.php:245
+msgid "Team Rosters (3.1.2 & before)"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-csv-exporter-setup.php:256
+msgid "Team Rosters (4.0 & later)"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-csv-exporter-setup.php:308
+#: mstw-csv-exporter/includes/mstw-csv-exporter-setup.php:309
+msgid "CSV Export"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-csv-exporter-setup.php:325
+msgid "You do not have sufficient permissions to access this page."
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-utility-functions.php:154
+msgid "Mon"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-utility-functions.php:155
+msgid "Tue"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-utility-functions.php:156
+msgid "Wed"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-utility-functions.php:157
+msgid "Thr"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-utility-functions.php:158
+msgid "Fri"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-utility-functions.php:159
+msgid "Sat"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-utility-functions.php:160
+msgid "Sun"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-utility-functions.php:163
+msgid "Monday"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-utility-functions.php:164
+msgid "Tuesday"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-utility-functions.php:165
+msgid "Wednesday"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-utility-functions.php:166
+msgid "Thursday"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-utility-functions.php:167
+msgid "Friday"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-utility-functions.php:168
+msgid "Saturday"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-utility-functions.php:169
+msgid "Sunday"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-utility-functions.php:172
+msgid "January"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-utility-functions.php:173
+msgid "February"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-utility-functions.php:174
+msgid "March"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-utility-functions.php:175
+msgid "April"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-utility-functions.php:176
+#: mstw-csv-exporter/includes/mstw-utility-functions.php:190
+msgid "May"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-utility-functions.php:177
+msgid "June"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-utility-functions.php:178
+msgid "July"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-utility-functions.php:179
+msgid "August"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-utility-functions.php:180
+msgid "September"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-utility-functions.php:181
+msgid "October"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-utility-functions.php:182
+msgid "November"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-utility-functions.php:183
+msgid "December"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-utility-functions.php:186
+msgid "Jan"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-utility-functions.php:187
+msgid "Feb"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-utility-functions.php:188
+msgid "Mar"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-utility-functions.php:189
+msgid "Apr"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-utility-functions.php:191
+msgid "Jun"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-utility-functions.php:192
+msgid "Jul"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-utility-functions.php:193
+msgid "Aug"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-utility-functions.php:194
+msgid "Sep"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-utility-functions.php:195
+msgid "Oct"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-utility-functions.php:196
+msgid "Nov"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-utility-functions.php:197
+msgid "Dec"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-utility-functions.php:323
+msgid "Default Field"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-utility-functions.php:324
+msgid "Default Label"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-utility-functions.php:554
+msgid "Show"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-utility-functions.php:555
+msgid "Hide"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-utility-functions.php:561
+#: mstw-csv-exporter/includes/mstw-utility-functions.php:576
+#: mstw-csv-exporter/includes/mstw-utility-functions.php:586
+#: mstw-csv-exporter/includes/mstw-utility-functions.php:606
+#: mstw-csv-exporter/includes/mstw-utility-functions.php:614
+#: mstw-csv-exporter/includes/mstw-utility-functions.php:625
+msgid "Custom"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-utility-functions.php:562
+msgid "Tuesday, 07 April 01:15 pm"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-utility-functions.php:563
+msgid "Tuesday, 7 April 01:15 pm"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-utility-functions.php:564
+msgid "Tuesday, 07 April 1:15 pm"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-utility-functions.php:565
+msgid "Tuesday, 7 April 1:15 pm"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-utility-functions.php:566
+#: mstw-csv-exporter/includes/mstw-utility-functions.php:567
+msgid "Tuesday, 7 April 13:15"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-utility-functions.php:568
+msgid "07 April 13:15"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-utility-functions.php:569
+msgid "7 April 13:15"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-utility-functions.php:570
+msgid "07 April 01:15 pm"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-utility-functions.php:571
+msgid "7 April 01:15 pm"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-utility-functions.php:580
+msgid "Formats for 7 April 2013 13:15."
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-utility-functions.php:591
+msgid "07 Apr 2013"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-utility-functions.php:592
+msgid "7 Apr 2013"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-utility-functions.php:593
+msgid "Tues, 07 Apr 2013"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-utility-functions.php:594
+msgid "Tues, 7 Apr 13"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-utility-functions.php:595
+msgid "Tuesday, 7 Apr"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-utility-functions.php:596
+msgid "Tuesday, 07 April 2013"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-utility-functions.php:597
+msgid "Tuesday, 7 April 2013"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-utility-functions.php:598
+msgid "Tues, 07 Apr"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-utility-functions.php:599
+msgid "Tues, 7 Apr"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-utility-functions.php:600
+msgid "07 Apr"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-utility-functions.php:601
+msgid "7 Apr"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-utility-functions.php:609
+msgid "Formats for 7 Apr 2013. Default: 2013-04-07"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-utility-functions.php:615
+msgid "08:00 (24hr)"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-utility-functions.php:616
+msgid "8:00 (24hr)"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-utility-functions.php:617
+msgid "08:00 am"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-utility-functions.php:618
+msgid "08:00 AM"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-utility-functions.php:619
+msgid "8:00 am"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-utility-functions.php:620
+msgid "8:00 AM"
+msgstr ""
+
+#: mstw-csv-exporter/includes/mstw-utility-functions.php:628
+msgid "Formats for eight in the morning. Default: 08:00"
+msgstr ""
+
+#: mstw-csv-exporter/templates/mstw-csv-settings.php:24
+msgid "MSTW CSV Exporter Settings"
+msgstr ""
+
+#: mstw-csv-exporter/templates/mstw-csv-settings.php:37
+msgid "Export Selected Table"
+msgstr ""
