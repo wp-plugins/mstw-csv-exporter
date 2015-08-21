@@ -602,8 +602,8 @@ function mstw_csvx_get_fields_map( ) {
 						),
 				'mstw_ss_team' =>
 					array( 'selectinput' => 
-						array(	'post_title'		=> 'game_title',
-								'post_slug'			=> 'game_slug',
+						array(	'post_title'		=> 'team_title',
+								'post_slug'			=> 'team_slug',
 								
 								'team_full_name'	=> 'team_full_name',
 								'team_short_name'	=> 'team_short_name',
